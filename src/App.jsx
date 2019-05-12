@@ -9,7 +9,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>my mini youtube</div>
+      <div className="ui container">my mini youtube</div>
     );
   }
 
