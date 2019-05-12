@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchBar from './components/SearchBar';
 
 class App extends React.Component {
   constructor() {
@@ -9,7 +10,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="ui container">my mini youtube</div>
+      <div className="ui container">
+        <SearchBar />
+      </div>
     );
   }
 
