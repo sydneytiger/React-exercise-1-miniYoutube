@@ -1,7 +1,7 @@
 import React from 'react';
 import VideoItem from './VideoItem';
 
-const VideoList = (props) => {
+const VideoList = props => {
 
   return (
     <div className="ui items">
