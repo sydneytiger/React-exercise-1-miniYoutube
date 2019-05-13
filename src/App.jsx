@@ -2,13 +2,14 @@ import React from 'react';
 import SearchBar from './components/SearchBar';
 import youtube from './apis/youtube';
 import VideoList from './components/VideoList';
+import VideoDetail from './components/VideoDetail';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      keyword: null,
-      searchResult: []
+      searchResult: [],
+      selectedVideo: null
     };
   }
 
@@ -17,14 +18,19 @@ class App extends React.Component {
       params: { q: keyword }
     });
 
-    this.setState({ searchResult: response.data.items });
+    this.setState({ searchResult: response.data.items.filter(f => f.id.videoId) });
   }
+
+  onVideoSelected = (video) => {
+    this.setState({ selectedVideo: video });
+  };
 
   render() {
     return (
       <div className="ui container">
         <SearchBar onSearchSubmit={this.searchSubmitHandler} />
-        <VideoList videos={this.state.searchResult} />
+        <VideoDetail video={this.state.selectedVideo} />
+        <VideoList videos={this.state.searchResult} onVideoSelected={this.onVideoSelected} />
       </div>
     );
   }

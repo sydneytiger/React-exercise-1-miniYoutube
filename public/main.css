@@ -2,3 +2,7 @@ body {
     background-color: grey !important;
     margin-top: 20px;
 }
+
+.video-item {
+    cursor: pointer;
+}
