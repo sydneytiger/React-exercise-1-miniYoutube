@@ -13,8 +13,6 @@ class App extends React.Component {
   }
 
   searchSubmitHandler = async (keyword) => {
-    console.log(`search from App for ${keyword}`);
-
     const response = await youtube.get('/search', {
       params: { q: keyword }
     });
