@@ -15,9 +15,6 @@ const VideoItem = props => {
                     <span className="price">{snippet.channelTitle}</span>
                     <span className="stay">{publishDate}</span>
                 </div>
-                <div className="description">
-                    <p>{snippet.description}</p>
-                </div>
             </div>
         </div>
     )
