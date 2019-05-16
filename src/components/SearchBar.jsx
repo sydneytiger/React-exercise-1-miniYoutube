@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store from '../store';
-import { updateKeyword } from '../actions/index';
+import { updateKeyword } from '../actions';
 
 class SearchBar extends React.Component {
-  state = { keyword: '' };
-
   inputRef = React.createRef();
 
-  componentDidMount(){
+  componentDidMount() {
     this.inputRef.current.focus();
   };
 
@@ -27,7 +25,7 @@ class SearchBar extends React.Component {
               type="text"
               value={this.props.keyword}
               placeholder="Search..."
-              onChange={(e) => {store.dispatch(updateKeyword(e.target.value))}}
+              onChange={(e) => { store.dispatch(updateKeyword(e.target.value)) }}
             />
             <i className="search icon"></i>
           </div>

@@ -1,34 +1,37 @@
-import { ADD_VIDEOS, UPDATE_KEYWORD} from '../constaints';
+import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO } from '../constaints';
 import { combineReducers } from 'redux';
-import store from '../store';
 
-const initialState = {
-  searchResult: [],
-  selectedVideo: null,
-  keyword: ''
-}
-
-const videoReducer = (state = initialState, action) => {
-  switch(action.type){
+const searchResult = (state = [], action) => {
+  switch (action.type) {
     case ADD_VIDEOS:
-      return {searchResult: [...action.payload]}
+      return [...action.payload];
     default:
       return state;
   }
 };
 
-const searchReducer = (state = initialState, action) => {
-  switch(action.type){
+const keyword = (state = '', action) => {
+  switch (action.type) {
     case UPDATE_KEYWORD:
-      return Object.assign(state, {keyword: action.payload});
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const selectedVideo = (state = null, action) => {
+  switch (action.type) {
+    case SELECT_VIDEO:
+      return action.payload;
     default:
       return state;
   }
 };
 
 const rootReducer = combineReducers({
-  videoReducer,
-  searchReducer
+  searchResult,
+  selectedVideo,
+  keyword
 });
 
 export default rootReducer;

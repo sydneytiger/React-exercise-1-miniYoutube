@@ -1,4 +1,4 @@
-import {ADD_VIDEOS, UPDATE_KEYWORD} from '../constaints';
+import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO } from '../constaints';
 
 const addVideos = videos => {
   return {
@@ -14,7 +14,15 @@ const updateKeyword = val => {
   }
 };
 
+const selectVideo = video => {
+  return {
+    type: SELECT_VIDEO,
+    payload: video
+  }
+}
+
 export {
   addVideos,
-  updateKeyword
+  updateKeyword,
+  selectVideo
 }

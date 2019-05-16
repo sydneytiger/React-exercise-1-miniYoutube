@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addVideos, selectVideo } from './actions';
 import SearchBar from './components/SearchBar';
 import youtube from './apis/youtube';
 import VideoList from './components/VideoList';
@@ -22,15 +24,10 @@ class App extends React.Component {
       params: { q: keyword }
     });
 
-    this.setState({ 
-      searchResult: response.data.items.filter(f => f.id.videoId),
-      selectedVideo: response.data.items[0]
-    });
+    const result = response.data.items.filter(f => f.id.videoId);
+    this.props.addVideos(result);
+    this.props.selectVideo(result[0]);
   }
-
-  onVideoSelected = (video) => {
-    this.setState({ selectedVideo: video });
-  };
 
   render() {
     return (
@@ -38,18 +35,31 @@ class App extends React.Component {
         <SearchBar onSearchSubmit={this.searchSubmitHandler} />
         <div className="ui grid">
           <div className="ui row">
-          <div className="eleven wide column">
-            <VideoDetail video={this.state.selectedVideo} />
-          </div>
-          <div className="five wide column">
-            <VideoList videos={this.state.searchResult} onVideoSelected={this.onVideoSelected} />
-          </div>
+            <div className="eleven wide column">
+              <VideoDetail video={this.props.selectedVideo} />
+            </div>
+            <div className="five wide column">
+              <VideoList videos={this.props.searchResult} />
+            </div>
           </div>
         </div>
       </div>
     );
   }
-
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    selectedVideo: state.selectedVideo,
+    searchResult: state.searchResult
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addVideos: videos => dispatch(addVideos(videos)),
+    selectVideo: video => dispatch(selectVideo(video))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
