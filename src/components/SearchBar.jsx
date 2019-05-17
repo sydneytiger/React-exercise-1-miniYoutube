@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import store from '../store';
 import { updateKeyword } from '../actions';
 
@@ -12,7 +11,8 @@ class SearchBar extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onSearchSubmit(this.props.keyword);
+    this.props.onSearchSubmit(this.inputRef.current.value);
+    store.dispatch(updateKeyword(this.inputRef.current.value))
   };
 
   render() {
@@ -23,9 +23,7 @@ class SearchBar extends React.Component {
             <input
               ref={this.inputRef}
               type="text"
-              value={this.props.keyword}
               placeholder="Search..."
-              onChange={(e) => { store.dispatch(updateKeyword(e.target.value)) }}
             />
             <i className="search icon"></i>
           </div>
@@ -34,10 +32,5 @@ class SearchBar extends React.Component {
   }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    keyword: state.keyword
-  }
-};
 
-export default connect(mapStateToProps)(SearchBar);
+export default SearchBar;
