@@ -1,10 +1,22 @@
 import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO } from '../constaints';
+import youtube from '../apis/youtube';
 
-const addVideos = videos => {
-  return {
+const searchVideos = keyword => async dispatch => {
+  const response = await youtube.get('/search', {
+    params: { q: keyword }
+  });
+
+  const result = response.data.items.filter(f => f.id.videoId);
+
+  dispatch({
     type: ADD_VIDEOS,
-    payload: videos
-  }
+    payload: result
+  });
+
+  dispatch({
+    type: SELECT_VIDEO,
+    payload: result[0]
+  });
 };
 
 const updateKeyword = val => {
@@ -22,7 +34,7 @@ const selectVideo = video => {
 }
 
 export {
-  addVideos,
+  searchVideos,
   updateKeyword,
   selectVideo
 }

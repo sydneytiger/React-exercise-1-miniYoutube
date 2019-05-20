@@ -1,38 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addVideos, selectVideo } from './actions';
+import { searchVideos } from './actions';
 import SearchBar from './components/SearchBar';
-import youtube from './apis/youtube';
 import VideoList from './components/VideoList';
 import VideoDetail from './components/VideoDetail';
+import store from './store';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      searchResult: [],
-      selectedVideo: null
-    };
-  }
-
   componentDidMount = () => {
-    this.searchSubmitHandler('reactjs');
+    this.props.searchVideos('reactjs');
   };
-
-  searchSubmitHandler = async (keyword) => {
-    const response = await youtube.get('/search', {
-      params: { q: keyword }
-    });
-
-    const result = response.data.items.filter(f => f.id.videoId);
-    this.props.addVideos(result);
-    this.props.selectVideo(result[0]);
-  }
 
   render() {
     return (
       <div className="ui container">
-        <SearchBar onSearchSubmit={this.searchSubmitHandler} />
+        <SearchBar onSearchSubmit={this.props.searchVideos} />
         <div className="ui grid">
           <div className="ui row">
             <div className="eleven wide column">
@@ -57,8 +39,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addVideos: videos => dispatch(addVideos(videos)),
-    selectVideo: video => dispatch(selectVideo(video))
+    searchVideos: keyword => dispatch(searchVideos(keyword))
   }
 };
 
