@@ -4,7 +4,6 @@ import { searchVideos } from './actions';
 import SearchBar from './components/SearchBar';
 import VideoList from './components/VideoList';
 import VideoDetail from './components/VideoDetail';
-import store from './store';
 
 class App extends React.Component {
   componentDidMount = () => {
