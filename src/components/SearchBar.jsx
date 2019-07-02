@@ -15,6 +15,10 @@ class SearchBar extends React.Component {
     store.dispatch(updateKeyword(this.inputRef.current.value))
   };
 
+  onFocus = e => {
+    e.target.select()
+  };
+
   render() {
     return (
       <div className="ui segment">
@@ -24,6 +28,7 @@ class SearchBar extends React.Component {
               ref={this.inputRef}
               type="text"
               placeholder="Search..."
+              onFocus={this.onFocus}
             />
             <i className="search icon"></i>
           </div>
