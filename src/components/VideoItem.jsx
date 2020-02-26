@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { selectVideo } from '../actions';
 
 const VideoItem = props => {
     const { snippet } = props.video;
     const publishDate = new Date(snippet.publishedAt).toLocaleDateString();
 
     return (
-        <div className="item video-item" onClick={() => { props.onVideoSelected(props.video) }}>
+        <div className="item video-item" onClick={() => { props.selectVideo() }}>
             <div className="ui small image">
                 <img src={snippet.thumbnails.default.url} alt={snippet.title} />
             </div>
@@ -20,4 +22,10 @@ const VideoItem = props => {
     )
 }
 
-export default VideoItem;
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        selectVideo: () => dispatch(selectVideo(ownProps.video))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(VideoItem);

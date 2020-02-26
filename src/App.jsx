@@ -1,55 +1,45 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { searchVideos } from './actions';
 import SearchBar from './components/SearchBar';
-import youtube from './apis/youtube';
 import VideoList from './components/VideoList';
 import VideoDetail from './components/VideoDetail';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      searchResult: [],
-      selectedVideo: null
-    };
-  }
-
   componentDidMount = () => {
-    this.searchSubmitHandler('reactjs');
-  };
-
-  searchSubmitHandler = async (keyword) => {
-    const response = await youtube.get('/search', {
-      params: { q: keyword }
-    });
-
-    this.setState({ 
-      searchResult: response.data.items.filter(f => f.id.videoId),
-      selectedVideo: response.data.items[0]
-    });
-  }
-
-  onVideoSelected = (video) => {
-    this.setState({ selectedVideo: video });
+    this.props.searchVideos('reactjs');
   };
 
   render() {
     return (
       <div className="ui container">
-        <SearchBar onSearchSubmit={this.searchSubmitHandler} />
+        <SearchBar onSearchSubmit={this.props.searchVideos} />
         <div className="ui grid">
           <div className="ui row">
-          <div className="eleven wide column">
-            <VideoDetail video={this.state.selectedVideo} />
-          </div>
-          <div className="five wide column">
-            <VideoList videos={this.state.searchResult} onVideoSelected={this.onVideoSelected} />
-          </div>
+            <div className="eleven wide column">
+              <VideoDetail video={this.props.selectedVideo} />
+            </div>
+            <div className="five wide column">
+              <VideoList videos={this.props.searchResult} />
+            </div>
           </div>
         </div>
       </div>
     );
   }
-
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    selectedVideo: state.selectedVideo,
+    searchResult: state.searchResult
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchVideos: keyword => dispatch(searchVideos(keyword))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

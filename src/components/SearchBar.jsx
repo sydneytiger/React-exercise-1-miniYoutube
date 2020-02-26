@@ -1,17 +1,22 @@
 import React from 'react';
+import store from '../store';
+import { updateKeyword } from '../actions';
 
 class SearchBar extends React.Component {
-  state = { keyword: '' };
-
   inputRef = React.createRef();
 
-  componentDidMount(){
+  componentDidMount() {
     this.inputRef.current.focus();
   };
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.onSearchSubmit(this.state.keyword);
+    this.props.onSearchSubmit(this.inputRef.current.value);
+    store.dispatch(updateKeyword(this.inputRef.current.value))
+  };
+
+  onFocus = e => {
+    e.target.select()
   };
 
   render() {
@@ -22,15 +27,15 @@ class SearchBar extends React.Component {
             <input
               ref={this.inputRef}
               type="text"
-              value={this.state.keyword}
               placeholder="Search..."
-              onChange={(e) => this.setState({ keyword: e.target.value })}
+              onFocus={this.onFocus}
             />
             <i className="search icon"></i>
           </div>
         </form>
       </div>)
   }
-}
+};
+
 
 export default SearchBar;
