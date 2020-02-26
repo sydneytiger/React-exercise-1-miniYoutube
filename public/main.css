@@ -6,3 +6,9 @@ body {
 .video-item {
     cursor: pointer;
 }
+
+.loading {
+    position: absolute;
+    left: calc(100% / 2 + 80px);
+    top: 100px;
+}
