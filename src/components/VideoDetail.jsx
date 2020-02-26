@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import loading from './images/loading.svg';
 
 const VideoDetail = ({ video }) => {
   if (video && video.snippet) {
@@ -18,7 +19,9 @@ const VideoDetail = ({ video }) => {
     )
   }
   else {
-    return <div>loading...</div>
+    return <div className="loading">
+      <img src={loading} alt="loading" />
+    </div>
   }
 
 };
