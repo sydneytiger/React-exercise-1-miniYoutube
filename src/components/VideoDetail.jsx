@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Loader from './Loader';
 import loading from './images/loading.svg';
 
 const VideoDetail = ({ video }) => {
@@ -19,9 +20,7 @@ const VideoDetail = ({ video }) => {
     )
   }
   else {
-    return <div className="loading">
-      <img src={loading} alt="loading" />
-    </div>
+    return <Loader></Loader>
   }
 
 };
