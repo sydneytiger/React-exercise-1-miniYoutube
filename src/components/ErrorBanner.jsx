@@ -1,18 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Message } from 'semantic-ui-react';
 
-const ErrorBanner = ({info}) => {
+const ErrorBanner = () => {
   return ( 
-    <ul>
-      <li>{info}</li>
-    </ul>
+    <Message negative>
+      <Message.Header>We're sorry! we fail to get youtube data</Message.Header>
+      <p>Daily limit reached! Please try again tomorrow.</p>
+    </Message>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    info: state.error
-  }
-}
+
  
-export default connect(mapStateToProps)(ErrorBanner);
+export default ErrorBanner;

@@ -1,6 +1,7 @@
 import React from 'react';
 import store from '../store';
 import { updateKeyword } from '../actions';
+import { search } from 'semantic-ui-react';
 
 class SearchBar extends React.Component {
   inputRef = React.createRef();
