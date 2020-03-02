@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Loader from './Loader';
-import loading from './images/loading.svg';
+import ErrorBanner from './ErrorBanner';
 
-const VideoDetail = ({ video }) => {
+const VideoDetail = ({ video, error }) => {
   if (video && video.snippet) {
     return (
       <React.Fragment>
@@ -19,15 +19,19 @@ const VideoDetail = ({ video }) => {
       </React.Fragment>
     )
   }
+  else if (error) {
+  return <ErrorBanner></ErrorBanner>
+  }
   else {
-    return <Loader></Loader>
+    return <Loader isFullScreen></Loader>
   }
 
 };
 
 const mapStateToProps = state => {
   return {
-    video: state.selectedVideo
+    video: state.selectedVideo,
+    error: state.error
   }
 };
 

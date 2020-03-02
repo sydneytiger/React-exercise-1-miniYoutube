@@ -1,4 +1,4 @@
-import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO } from '../constaints';
+import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO,CALL_ERROR } from '../constaints';
 import { combineReducers } from 'redux';
 
 const searchResultReducer = (state = [], action) => {
@@ -28,10 +28,20 @@ const selectedVideoReducer = (state = null, action) => {
   }
 };
 
+const errorReducer = (state = null, action) => {
+  switch (action.type) {
+    case CALL_ERROR:
+      return action.payload
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   searchResult: searchResultReducer,
   selectedVideo: selectedVideoReducer,
-  keyword: keywordReducer
+  keyword: keywordReducer,
+  error: errorReducer
 });
 
 export default rootReducer;

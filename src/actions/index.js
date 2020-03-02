@@ -1,22 +1,30 @@
-import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO } from '../constaints';
+import { ADD_VIDEOS, UPDATE_KEYWORD, SELECT_VIDEO, CALL_ERROR } from '../constaints';
 import youtube from '../apis/youtube';
 
 const searchVideos = keyword => async dispatch => {
-  const response = await youtube.get('/search', {
-    params: { q: keyword }
-  });
+  try {
+    const response = await youtube.get('/search', {
+      params: { q: keyword }
+    });
+  
+    const result = response.data.items.filter(f => f.id.videoId);
+  
+    dispatch({
+      type: ADD_VIDEOS,
+      payload: result
+    });
+  
+    dispatch({
+      type: SELECT_VIDEO,
+      payload: result[0]
+    });
+  } catch(error){
+    dispatch({
+      type: CALL_ERROR,
+      payload: error.message
+    });
+  }
 
-  const result = response.data.items.filter(f => f.id.videoId);
-
-  dispatch({
-    type: ADD_VIDEOS,
-    payload: result
-  });
-
-  dispatch({
-    type: SELECT_VIDEO,
-    payload: result[0]
-  });
 };
 
 const updateKeyword = val => {
